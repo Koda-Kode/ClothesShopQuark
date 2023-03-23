@@ -1,8 +1,5 @@
 #pragma once
-#include <iostream> 
 #include <stdlib.h>
-#include <ctime>
-using namespace std;
 
 class Shop
 {
@@ -14,10 +11,9 @@ public:
     ~Shop();
 };
 
-Shop::Shop(/* args */)
+Shop::Shop()
 {
 }
-
 
 class Vendor
 {
@@ -26,7 +22,7 @@ private:
     string lastName;
     int code;
     Invoice invList[20];
-    unique_ptr<Invoice> invoiceExample = make_unique<Invoice>();
+    unique_ptr<Invoice> invoiceExample = make_unique<Invoice>(code, 1, 7);
 public:
     Vendor(string name, string lastName);
     ~Vendor();
@@ -51,7 +47,6 @@ private:
     int quantity;
 public:
     Invoice(int vendorCode, int article, int quantity);
-    ~Invoice();
 };
 
 Invoice::Invoice(int vendorCode, int article, int quantity)
@@ -60,5 +55,47 @@ Invoice::Invoice(int vendorCode, int article, int quantity)
     this->vendorCode = vendorCode;
     this->article = article;
     this->quantity = quantity;
+    string date = "example date";
 }
 
+class Clothing
+{
+protected:
+    int quality;
+    float unitPrice;
+    int stockAmount; // Un objeto son todo es stock
+};
+
+class Shirts : public Clothing
+{
+private:
+    int sleeve;
+    int collar;
+public:
+    Shirts(int quality, float unitPrice, int stockAmount, int sleeve, int collar);
+};
+
+Shirts::Shirts(int quality, float unitPrice, int stockAmount, int sleeve, int collar)
+{
+    this->quality = quality;
+    this->unitPrice = unitPrice;
+    this->stockAmount = stockAmount;
+    this->sleeve = sleeve;
+    this->collar = collar;
+}
+
+class Pants : public Clothing
+{
+private:
+    int type;
+public:
+    Pants(int quality, float unitPrice, int stockAmount, int type);
+};
+
+Pants::Pants(int quality, float unitPrice, int stockAmount, int type)
+{
+    this->quality = quality;
+    this->unitPrice = unitPrice;
+    this->stockAmount = stockAmount;
+    this->type = type;
+}

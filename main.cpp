@@ -1,5 +1,5 @@
 #include <memory>
-    // Yep I'm lazy
+    // Laziness for the win
 using namespace std;
 
 #include "viewDef.cpp"
