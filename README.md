@@ -1,2 +1,2 @@
 # ClothesShopQuark
- My attempt at the final practic exam for the Quark C++ course.
+ My attempt at the final exam for the Quark C++ course.
