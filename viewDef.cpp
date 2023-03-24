@@ -1,4 +1,5 @@
 #include <iostream>
+// The "conio" library is used for a more fluid interaction with the program
 #include <conio.h>
 using namespace std;
 #include "view.hpp"
@@ -6,81 +7,89 @@ using namespace std;
 void View::programLoop(){
     int key = 0;
     // Change states for menus
-    int estado=0;
-    
+    int state=0;
+    startMenu();
+
     while (1)
     {
-            // Interacción
-        key=getch();
-            // Menus
-        if(estado==0){
+        if (state!=5)
+        {
+            // This function retrieves a pressed key in ASCII code
+            key=getch();
+        }
+            // Different menus
+            // 0 = main menu / 1 = invoice history / 2 = create invoice
+        if(state==0){
+            
             switch (key)
             {
                 case 49:
-                    menuArmas();
-                    estado=1;
+                    state = 1;
+                    invoiceHistoryMenu();
                     break;
                 case 50:
-                    pres->presDejar();
-                    break;
-                case 51:
-                    pres->presDisparar();
-                    break;
-                case 52:
-                    pres->presArmaActual();
+                    // Create Invoice
                     break;
                 case 32:
-                estado=2;
+                    state=5;
                     break;
                 default:
                     break;
             }
         }
-        else if(estado==1){
+        else if(state==1){
             switch (key)
             {
-                case 49:
-                    pres->presRecojer(1);
-                    break;
-                case 50:
-                    pres->presRecojer(2);
-                    break;
-                case 51:
-                    pres->presRecojer(3);
-                    break;
                 case 32:
+                    state = 0;
                     startMenu();
-                    estado=0;
                     break;
                 default:
                     break;
             }
         }
-        // Salir del programa al presionar espacio
-        else{break;}
+        
+        else if(state==5){break;}
     }
 
 }
 
 void View::startMenu(){
-    cout << "\e[1;1H\e[2J";
-    cout << "\n -== Bienvenido al campo de entrenamiento, soldado ==-\n" << endl;
-    cout << "Que desea hacer?" << endl;
-    cout << "(Presione el numero correspondiente a la opcion del menu)" << endl;
+    topPart();
+    pres->printShopInfo();
+    dotLine();
+    pres->printVendorInfo();
+    dotLine();
+    cout << "SELECT AN OPTION:" << endl << endl;
 
-    cout << "1 - Recoger un arma" << endl;
-    cout << "2 - Dejar el arma" << endl;
-    cout << "3 - Disparar" << endl;
-    cout << "4 - Ver arma actual" << endl;
-    cout << "Espacio - Salir del programa" << endl << endl;
+    cout << "1) Invoice History" << endl;
+    cout << "2) Create an Invoice" << endl;
+    dotLine();
+    cout << "Press spacebar twice to close calculator" << endl;
+    dotLine();
 }
 
-void View::menuArmas(){
-    cout << "\e[1;1H\e[2J";
-    cout << "Por favor, escoja el arma que desea utilizar:" << endl;
+void View::invoiceHistoryMenu(){
+    topPart();
+    cout << "HISTORY" << endl;
+    dotLine();
+    cout << "Press spacebar to go back" << endl;
+    dotLine();
+    cout << endl;
+    pres->printVendorInvoices();
+    cout << endl;
+    dotLine();
+    cout << "Press spacebar to go back" << endl;
+    dotLine();
+}
 
-    cout << "1 - Revolver" << endl;
-    cout << "2 - Escopeta" << endl;
-    cout << "3 - Rifle" << endl;
-    cout << "Espacio - Volver atras" << endl << endl;
+void View::topPart(){
+    cout << "\e[1;1H\e[2J";
+    cout << "---------------------------------------------------------" << endl;
+    cout << "INVOICE CALCULATOR" << endl;
+    cout << "---------------------------------------------------------" << endl;
+}
+
+void View::dotLine(){
+    cout << "---------------------------------------------------------" << endl;
 }
