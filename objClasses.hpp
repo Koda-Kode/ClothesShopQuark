@@ -61,24 +61,24 @@ Invoice::Invoice(int vendorCode, int article, int quantity)
 class Clothing
 {
 protected:
-    int quality;
-    float unitPrice;
+    float quality;
     int stockAmount; // Un objeto son todo es stock
+public:
+    void addStock(int st) {stockAmount += st;}
 };
 
 class Shirts : public Clothing
 {
 private:
-    int sleeve;
-    int collar;
+    float sleeve;
+    float collar;
 public:
-    Shirts(int quality, float unitPrice, int stockAmount, int sleeve, int collar);
+    Shirts(float sleeve, float quality, float collar, int stockAmount);
 };
 
-Shirts::Shirts(int quality, float unitPrice, int stockAmount, int sleeve, int collar)
+Shirts::Shirts(float sleeve, float quality, float collar, int stockAmount)
 {
     this->quality = quality;
-    this->unitPrice = unitPrice;
     this->stockAmount = stockAmount;
     this->sleeve = sleeve;
     this->collar = collar;
@@ -87,15 +87,14 @@ Shirts::Shirts(int quality, float unitPrice, int stockAmount, int sleeve, int co
 class Pants : public Clothing
 {
 private:
-    int type;
+    float type;
 public:
-    Pants(int quality, float unitPrice, int stockAmount, int type);
+    Pants(float type, float quality, int stockAmount);
 };
 
-Pants::Pants(int quality, float unitPrice, int stockAmount, int type)
+Pants::Pants(float type, float quality, int stockAmount)
 {
     this->quality = quality;
-    this->unitPrice = unitPrice;
     this->stockAmount = stockAmount;
     this->type = type;
 }
