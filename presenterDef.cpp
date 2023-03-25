@@ -11,3 +11,7 @@ void Presenter::printVendorInfo(){
 void Presenter::printVendorInvoices(){
     shopPtr->printVendInvoices();
 }
+
+void Presenter::createInvoice(int itemID, int unit, int quan){
+    shopPtr->selectItem(itemID,unit,quan);
+}

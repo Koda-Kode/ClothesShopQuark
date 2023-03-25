@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string.h>
 #include "objClasses.hpp"
 
     // Clothes
@@ -11,11 +9,35 @@ Shirts::Shirts(float sleeve, float quality, float collar, int stockAmount)
     this->collar = collar;
 }
 
+int Shirts::priceCalculator(int unit, int quan){
+    if (stockAmount - quan < 0)
+    {
+        cout << "No hay suficiente stock de este producto";
+        return 0;
+    }
+    int total;
+    total = (unit * sleeve * collar * quan) * quality;
+    stockAmount -= quan;
+    return total;
+}
+
 Pants::Pants(float type, float quality, int stockAmount)
 {
     this->quality = quality;
     this->stockAmount = stockAmount;
     this->type = type;
+}
+
+int Pants::priceCalculator(int unit, int quan){
+    if (stockAmount - quan < 0)
+    {
+        cout << "No hay suficiente stock de este producto";
+        return 0;
+    }
+    int total;
+    total = (unit * type * quan) * quality;
+    stockAmount -= quan;
+    return total;
 }
 
     // Invoice
@@ -26,9 +48,14 @@ Invoice::Invoice(int vendorCode)
     string date = "example date";
 }
 
-void Invoice::setAttributes(int quantity, string article, int unitPrice, int totalPrice){
+void Invoice::setAttributes(int quantity, string artName, int unitPrice, int totalPrice){
+    cout << quantity << endl;
+    cout << artName << endl;
+    cout << unitPrice << endl;
+    cout << totalPrice << endl;
     this->quantity = quantity;
-    this->invArticle = article;
+    cout << "Hasta ahora si" << endl;
+    this->invArticle = artName;
     this->unitPrice = unitPrice;
     this->totalPrice = totalPrice;
 }
@@ -51,8 +78,8 @@ Vendor::Vendor(string name, string lastName)
     this->code = rand() % 99999;
 }
 
-void Vendor::createInvoice(int quan, string art, int unitPrice, int totalPrice){
-    invList[invoiceQuantity]->setAttributes(quan, art, unitPrice, totalPrice);
+void Vendor::createInvoice(int quan, string artName, int unitPrice, int totalPrice){
+    invList[invoiceQuantity]->setAttributes(quan, artName, unitPrice, totalPrice);
     invoiceQuantity++;
 }
 
@@ -82,10 +109,57 @@ void Shop::printInfo(){
 }
 
 void Shop::printVendInfo(){
-    vendor->printInfo();
+    vendorPtr->printInfo();
 }
 
 void Shop::printVendInvoices(){
-    vendor->printInvoices();
+    vendorPtr->printInvoices();
 }
 
+void Shop::selectItem(int itemID, int unit, int quan){
+    switch (itemID)
+    {
+        // Shirts
+    case 1:
+        vendorPtr->createInvoice(quan,"Standard Normal Short Shirt",unit,shortStandardNormal->priceCalculator(unit,quan));
+        break;
+    case 2:
+        vendorPtr->createInvoice(quan,"Premium Normal Short Shirt",unit,shortPremiumNormal->priceCalculator(unit,quan));
+        break;
+    case 3:
+        vendorPtr->createInvoice(quan,"Standard Mao Short Shirt",unit,shortStandardMao->priceCalculator(unit,quan));
+        break;
+    case 4:
+        vendorPtr->createInvoice(quan,"Premium Mao Short Shirt",unit,shortPremiumMao->priceCalculator(unit,quan));
+        break;
+    case 5:
+        vendorPtr->createInvoice(quan,"Standard Normal Large Shirt",unit,largeStandardNormal->priceCalculator(unit,quan));
+        break;
+    case 6:
+        vendorPtr->createInvoice(quan,"Premium Normal Large Shirt",unit,largePremiumNormal->priceCalculator(unit,quan));
+        break;
+    case 7:
+        vendorPtr->createInvoice(quan,"Standard Mao Large Shirt",unit,largeStandardMao->priceCalculator(unit,quan));
+        break;
+    case 8:
+        vendorPtr->createInvoice(quan,"Premium Mao Large Shirt",unit,largePremiumMao->priceCalculator(unit,quan));
+        break;
+        
+        // Pants
+    case 9:
+        vendorPtr->createInvoice(quan,"Standard Normal Pant",unit,normalStandard->priceCalculator(unit,quan));
+        break;
+    case 10:
+        vendorPtr->createInvoice(quan,"Premium Normal Pant",unit,normalPremium->priceCalculator(unit,quan));
+        break;
+    case 11:
+        vendorPtr->createInvoice(quan,"Standard Skinny Pant",unit,skinnyStandard->priceCalculator(unit,quan));
+        break;
+    case 12:
+        vendorPtr->createInvoice(quan,"Premium Skinny Pant",unit,skinnyPremium->priceCalculator(unit,quan));
+        break;
+    
+    default:
+        break;
+    }
+}
