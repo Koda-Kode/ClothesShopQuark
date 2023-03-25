@@ -9,15 +9,17 @@ Shirts::Shirts(float sleeve, float quality, float collar, int stockAmount)
     this->collar = collar;
 }
 
-int Shirts::priceCalculator(int unit, int quan){
+int Shirts::priceCalculator(int unit, int quan, int substract){
     if (stockAmount - quan < 0)
     {
-        cout << "No hay suficiente stock de este producto";
         return 0;
     }
     int total;
     total = (unit * sleeve * collar * quan) * quality;
-    stockAmount -= quan;
+    if (substract)
+    {
+        stockAmount -= quan;
+    }
     return total;
 }
 
@@ -28,36 +30,31 @@ Pants::Pants(float type, float quality, int stockAmount)
     this->type = type;
 }
 
-int Pants::priceCalculator(int unit, int quan){
+int Pants::priceCalculator(int unit, int quan, int substract){
     if (stockAmount - quan < 0)
     {
-        cout << "No hay suficiente stock de este producto";
         return 0;
     }
     int total;
     total = (unit * type * quan) * quality;
-    stockAmount -= quan;
+    if (substract)
+    {
+        stockAmount -= quan;
+    }
     return total;
 }
 
     // Invoice
-Invoice::Invoice(int vendorCode)
-{
-    this->id = rand() % 9999;
-    this->vendorCode = vendorCode;
-    string date = "example date";
-}
-
-void Invoice::setAttributes(int quantity, string artName, int unitPrice, int totalPrice){
-    cout << quantity << endl;
-    cout << artName << endl;
-    cout << unitPrice << endl;
-    cout << totalPrice << endl;
-    this->quantity = quantity;
-    cout << "Hasta ahora si" << endl;
+void Invoice::setAttributes(int quantit, string artName, int unitPrice, int totalPrice, int vendorCode){
+    this->quantity = quantit;
     this->invArticle = artName;
     this->unitPrice = unitPrice;
     this->totalPrice = totalPrice;
+    this->id = rand() % 9999;
+    this->vendorCode = vendorCode;
+    date = "example date";
+    cout << "\nInvoice result: " << endl;
+    printSelf();
 }
 
 void Invoice::printSelf(){
@@ -79,7 +76,7 @@ Vendor::Vendor(string name, string lastName)
 }
 
 void Vendor::createInvoice(int quan, string artName, int unitPrice, int totalPrice){
-    invList[invoiceQuantity]->setAttributes(quan, artName, unitPrice, totalPrice);
+    invList[invoiceQuantity].setAttributes(quan, artName, unitPrice, totalPrice, code);
     invoiceQuantity++;
 }
 
@@ -90,7 +87,7 @@ void Vendor::printInvoices(){
     }
     for (int i = 0; i < invoiceQuantity; i++)
     {
-        invList[i]->printSelf();
+        invList[i].printSelf();
     }
 }
 
@@ -121,45 +118,177 @@ void Shop::selectItem(int itemID, int unit, int quan){
     {
         // Shirts
     case 1:
-        vendorPtr->createInvoice(quan,"Standard Normal Short Shirt",unit,shortStandardNormal->priceCalculator(unit,quan));
+        if (shortStandardNormal->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Standard Normal Short Shirt",unit,shortStandardNormal->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 2:
-        vendorPtr->createInvoice(quan,"Premium Normal Short Shirt",unit,shortPremiumNormal->priceCalculator(unit,quan));
+        if (shortPremiumNormal->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Premium Normal Short Shirt",unit,shortPremiumNormal->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 3:
-        vendorPtr->createInvoice(quan,"Standard Mao Short Shirt",unit,shortStandardMao->priceCalculator(unit,quan));
+        if (shortStandardMao->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Standard Mao Short Shirt",unit,shortStandardMao->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 4:
-        vendorPtr->createInvoice(quan,"Premium Mao Short Shirt",unit,shortPremiumMao->priceCalculator(unit,quan));
+        if (shortPremiumMao->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Premium Mao Short Shirt",unit,shortPremiumMao->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 5:
-        vendorPtr->createInvoice(quan,"Standard Normal Large Shirt",unit,largeStandardNormal->priceCalculator(unit,quan));
+        if (largeStandardNormal->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Standard Normal Large Shirt",unit,largeStandardNormal->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 6:
-        vendorPtr->createInvoice(quan,"Premium Normal Large Shirt",unit,largePremiumNormal->priceCalculator(unit,quan));
+        if (largePremiumNormal->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Premium Normal Large Shirt",unit,largePremiumNormal->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 7:
-        vendorPtr->createInvoice(quan,"Standard Mao Large Shirt",unit,largeStandardMao->priceCalculator(unit,quan));
+        if (largeStandardMao->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Standard Mao Large Shirt",unit,largeStandardMao->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 8:
-        vendorPtr->createInvoice(quan,"Premium Mao Large Shirt",unit,largePremiumMao->priceCalculator(unit,quan));
+        if (largePremiumMao->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Premium Mao Large Shirt",unit,largePremiumMao->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
         
         // Pants
     case 9:
-        vendorPtr->createInvoice(quan,"Standard Normal Pant",unit,normalStandard->priceCalculator(unit,quan));
+        if (normalStandard->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Standard Normal Pant",unit,normalStandard->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 10:
-        vendorPtr->createInvoice(quan,"Premium Normal Pant",unit,normalPremium->priceCalculator(unit,quan));
+        if (normalPremium->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Premium Normal Pant",unit,normalPremium->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 11:
-        vendorPtr->createInvoice(quan,"Standard Skinny Pant",unit,skinnyStandard->priceCalculator(unit,quan));
+        if (skinnyStandard->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Standard Skinny Pant",unit,skinnyStandard->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     case 12:
-        vendorPtr->createInvoice(quan,"Premium Skinny Pant",unit,skinnyPremium->priceCalculator(unit,quan));
+        if (skinnyPremium->priceCalculator(unit,quan,0) == 0)
+        {
+            noStock();
+            break;
+        }
+        vendorPtr->createInvoice(quan,"Premium Skinny Pant",unit,skinnyPremium->priceCalculator(unit,quan,1));
+        invoiceCreated();
         break;
     
     default:
         break;
     }
+}
+
+int Shop::returnStock(int itemID){
+    switch (itemID)
+    {
+        // Shirts
+    case 1:
+        return shortStandardNormal->stockReturn();
+        break;
+    case 2:
+        return shortPremiumNormal->stockReturn();
+        break;
+    case 3:
+        return shortStandardMao->stockReturn();
+        break;
+    case 4:
+        return shortPremiumMao->stockReturn();
+        break;
+    case 5:
+        return largeStandardNormal->stockReturn();
+        break;
+    case 6:
+        return largePremiumNormal->stockReturn();
+        break;
+    case 7:
+        return largeStandardMao->stockReturn();
+        break;
+    case 8:
+        return largePremiumMao->stockReturn();
+        break;
+        
+        // Pants
+    case 9:
+        return normalStandard->stockReturn();
+        break;
+    case 10:
+        return normalPremium->stockReturn();
+        break;
+    case 11:
+        return skinnyStandard->stockReturn();
+        break;
+    case 12:
+        return skinnyPremium->stockReturn();
+        break;
+    default:
+        break;
+    }
+}
+
+void Shop::invoiceCreated(){
+    cout << "Invoice created succesfully" << endl;
+    cout << "---------------------------------------------------------" << endl;
+    cout << "Press spacebar to go back to the main menu" << endl;
+    cout << "---------------------------------------------------------" << endl;
+}
+void Shop::noStock(){
+    cout << "There's not enough stock of this product" << endl;
+    cout << "---------------------------------------------------------" << endl;
+    cout << "Press spacebar to go back to the main menu" << endl;
+    cout << "---------------------------------------------------------" << endl;
 }

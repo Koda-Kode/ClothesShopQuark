@@ -152,19 +152,19 @@ void View::programLoop(){
                     case 49:
                         invState = 5;
                         unitPrice(&price);
-                        unitQuantity(&quan);
+                        unitQuantity(&quan,itemID);
+                        dotLine();
                         creating();
                         pres->createInvoice(itemID,price,quan);
-                        invoiceCreated();
                         break;
                     case 50:
                         itemID += 1;
                         invState = 5;
                         unitPrice(&price);
-                        unitQuantity(&quan);
+                        unitQuantity(&quan,itemID);
+                        dotLine();
                         creating();
                         pres->createInvoice(itemID,price,quan);
-                        invoiceCreated();
                         break;
                     case 32:
                         state = 0;
@@ -217,6 +217,8 @@ void View::invoiceHistoryMenu(){
     cout << "HISTORY" << endl;
     dotLine();
     cout << "Press spacebar to go back" << endl;
+    dotLine();
+    cout << "(The maximum number of invoices is 20)" << endl;
     dotLine();
     cout << endl;
     pres->printVendorInvoices();
@@ -278,21 +280,16 @@ void View::unitPrice(int *price){
     cin >> *price;
 }
 
-void View::unitQuantity(int *quantity){
+void View::unitQuantity(int *quantity, int itemID){
     topInvoicePart();
-    cout << "How many units?" << endl << endl;
+    cout << "There are " << pres->returnUnits(itemID) << " units available." << endl;
+    dotLine();
+    cout << "How many units do you want to add?" << endl << endl;
     cin >> *quantity;
 }
 
 void View::creating(){
     cout << "Creating invoice..." << endl;
-}
-
-void View::invoiceCreated(){
-    cout << "Invoice created succesfully" << endl;
-    dotLine();
-    cout << "Press spacebar to go back to the main menu" << endl;
-    dotLine();
 }
 
 void View::topInvoicePart(){

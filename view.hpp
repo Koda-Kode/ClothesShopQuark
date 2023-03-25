@@ -21,7 +21,6 @@ public:
     void pantSkinny();
     void Premium();
     void unitPrice(int *price);
-    void unitQuantity(int *quantity);
+    void unitQuantity(int *quantity, int itemID);
     void creating();
-    void invoiceCreated();
 };
