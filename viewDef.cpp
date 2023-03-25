@@ -15,15 +15,16 @@ void View::programLoop(){
 
     while (1)
     {
-        if (state!=4)
+        if (state!=3)
         {
             // This function retrieves a pressed key in ASCII code
             // 1 = 49 / 2 = 50 / spacebar = 32
             key=getch();
         }
             // Different menus
-            // 0 = main menu / 1 = invoice history / 2 = create invoice / 3 = create invoice / 4 = close the program
+            // 0 = main menu / 1 = invoice history / 2 = create invoice / 3 = close the program
         if(state==0){
+            // Reset the Invoice creator values
             invState = 0;
             itemID = 0;
             switch (key)
@@ -37,7 +38,7 @@ void View::programLoop(){
                     clothType();
                     break;
                 case 32:
-                    state=4;
+                    state=3;
                     break;
                 default:
                     break;
@@ -187,12 +188,8 @@ void View::programLoop(){
             
            
         }
-        // Create the invoice
-        else if(state==3){
-            pres->createInvoice(itemID,price,quan);
-        }
         // Close the program
-        else if(state==4){break;}
+        else if(state==3){break;}
     }
 
 }

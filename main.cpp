@@ -1,5 +1,9 @@
 #include <ctime>
-
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#include <memory>
+using namespace std;
 #include "viewDef.cpp"
 
 

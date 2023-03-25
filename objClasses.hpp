@@ -1,8 +1,5 @@
 #pragma once
-#include <iostream>
-#include <stdlib.h>
-#include <string.h>
-#include <memory>
+
 using namespace std;
 
 // Clothing classes
