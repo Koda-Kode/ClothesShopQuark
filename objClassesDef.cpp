@@ -1,3 +1,4 @@
+#include <ctime>
 #include "objClasses.hpp"
 
     // Clothes
@@ -52,19 +53,29 @@ void Invoice::setAttributes(int quantit, string artName, int unitPrice, int tota
     this->totalPrice = totalPrice;
     this->id = rand() % 9999;
     this->vendorCode = vendorCode;
-    date = "example date";
+    date = getCurrentDateTime();
     cout << "\nInvoice result: " << endl;
     printSelf();
 }
 
 void Invoice::printSelf(){
     cout << "ID Number: " << id << endl;
-    cout << "Date of Creation: " << date << endl;
-    cout << "Vendor code: " << vendorCode << endl;
-    cout << "Product info: " << invArticle << endl;
-    cout << "Price per unit: " << "$" << unitPrice << endl;
+    cout << "Date and Time of Creation: " << date << endl;
+    cout << "Vendor Code: " << vendorCode << endl;
+    cout << "Product Info: " << invArticle << endl;
+    cout << "Price Per Unit: " << "$" << unitPrice << endl;
     cout << "Quantity: " << quantity << endl;
     cout << "Total: " << "$" << totalPrice << endl << endl;
+}
+
+string Invoice::getCurrentDateTime() {
+    time_t timeNow = time(nullptr);
+
+    char temp[80];
+    strftime(temp, 80, "%d-%m-%Y %H:%M:%S", localtime(&timeNow));
+    string dateTimeStr(temp);
+
+    return dateTimeStr;
 }
 
     // Vendor

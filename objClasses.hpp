@@ -47,6 +47,7 @@ protected:
 public:
     void setAttributes(int quantity, string artName, int unitPrice, int totalPrice, int vendorCode);
     void printSelf();
+    string getCurrentDateTime();
 };
 
 // Vendor class
