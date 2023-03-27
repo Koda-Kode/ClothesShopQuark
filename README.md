@@ -3,4 +3,4 @@
 
 UML Diagram:
 
-<img src="https://github.com/Koda-Kode/ClothesShopQuark/blob/e2c74d3465a7c2603d18c66c71353ab716179c43/UML%20Diagram.png">
+<img src="https://github.com/Koda-Kode/ClothesShopQuark/blob/c4354c36068bf7dbd9a99e46821aa176f2367957/UML%20Diagram.png">
