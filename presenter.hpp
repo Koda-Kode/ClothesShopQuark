@@ -12,4 +12,5 @@ public:
     void printVendorInvoices();
     void createInvoice(int itemID, int unit, int quan);
     int returnUnits(int itemID);
+    string returnNames(int itemID);
 };

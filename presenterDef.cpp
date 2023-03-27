@@ -17,5 +17,9 @@ void Presenter::createInvoice(int itemID, int unit, int quan){
 }
 
 int Presenter::returnUnits(int itemID){
-    shopPtr->returnStock(itemID);
+    return shopPtr->returnStock(itemID);
+}
+
+string Presenter::returnNames(int itemID){
+    return shopPtr->returnName(itemID);
 }

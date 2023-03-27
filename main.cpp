@@ -3,9 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <memory>
+#include <limits>
 using namespace std;
 #include "viewDef.cpp"
 
+void presentation();
 
 int main(){
         // An attempt to generate "real" random numbers

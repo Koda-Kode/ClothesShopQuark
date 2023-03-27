@@ -10,12 +10,12 @@ Shirts::Shirts(float sleeve, float quality, float collar, int stockAmount)
     this->collar = collar;
 }
 
-int Shirts::priceCalculator(int unit, int quan, int substract){
+float Shirts::priceCalculator(int unit, int quan, int substract){
     if (stockAmount - quan < 0)
     {
         return 0;
     }
-    int total;
+    float total;
     total = (unit * sleeve * collar * quan) * quality;
     if (substract)
     {
@@ -31,12 +31,12 @@ Pants::Pants(float type, float quality, int stockAmount)
     this->type = type;
 }
 
-int Pants::priceCalculator(int unit, int quan, int substract){
+float Pants::priceCalculator(int unit, int quan, int substract){
     if (stockAmount - quan < 0)
     {
         return 0;
     }
-    int total;
+    float total;
     total = (unit * type * quan) * quality;
     if (substract)
     {
@@ -46,7 +46,7 @@ int Pants::priceCalculator(int unit, int quan, int substract){
 }
 
     // Invoice
-void Invoice::setAttributes(int quantit, string artName, int unitPrice, int totalPrice, int vendorCode){
+void Invoice::setAttributes(int quantit, string artName, int unitPrice, float totalPrice, int vendorCode){
     this->quantity = quantit;
     this->invArticle = artName;
     this->unitPrice = unitPrice;
@@ -86,7 +86,7 @@ Vendor::Vendor(string name, string lastName)
     this->code = rand() % 99999;
 }
 
-void Vendor::createInvoice(int quan, string artName, int unitPrice, int totalPrice){
+void Vendor::createInvoice(int quan, string artName, int unitPrice, float totalPrice){
     invList[invoiceQuantity].setAttributes(quan, artName, unitPrice, totalPrice, code);
     invoiceQuantity++;
 }
@@ -285,6 +285,53 @@ int Shop::returnStock(int itemID){
         break;
     case 12:
         return skinnyPremium->stockReturn();
+        break;
+    default:
+        break;
+    }
+}
+
+string Shop::returnName(int itemID){
+    switch (itemID)
+    {
+        // Shirts
+    case 1:
+        return "Standard Normal Short Shirt";
+        break;
+    case 2:
+        return "Premium Normal Short Shirt";
+        break;
+    case 3:
+        return "Standard Mao Short Shirt";
+        break;
+    case 4:
+        return "Premium Mao Short Shirt";
+        break;
+    case 5:
+        return "Standard Normal Large Shirt";
+        break;
+    case 6:
+        return "Premium Normal Large Shirt";
+        break;
+    case 7:
+        return "Standard Mao Large Shirt";
+        break;
+    case 8:
+        return "Premium Mao Large Shirt";
+        break;
+        
+        // Pants
+    case 9:
+        return "Standard Normal Pant";
+        break;
+    case 10:
+        return "Premium Normal Pant";
+        break;
+    case 11:
+        return "Standard Skinny Pant";
+        break;
+    case 12:
+        return "Premium Skinny Pant";
         break;
     default:
         break;

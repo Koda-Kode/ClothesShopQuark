@@ -20,6 +20,7 @@ public:
     void shirtCollar();
     void pantSkinny();
     void Premium();
+    void confirm(int itemID);
     void unitPrice(int *price);
     void unitQuantity(int *quantity, int itemID);
     void creating();

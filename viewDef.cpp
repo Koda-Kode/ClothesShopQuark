@@ -57,8 +57,7 @@ void View::programLoop(){
         }
         else if(state==2){
             // Menu for the various clothes options
-            // (I doubt I did this the best way possible cause it's very confusing, but it works)
-            // I tried comparing "invState" with a switch case, but it kept failing so I used else if
+            // I tried comparing "invState" with a switch case, but it kept failing so I used else if, if you can tell me why I would be grateful
 
             // Choice between shirts and pants
             if (invState==0)
@@ -152,6 +151,7 @@ void View::programLoop(){
                 {
                     case 49:
                         invState = 5;
+                        confirm(itemID);
                         unitPrice(&price);
                         unitQuantity(&quan,itemID);
                         dotLine();
@@ -161,6 +161,7 @@ void View::programLoop(){
                     case 50:
                         itemID += 1;
                         invState = 5;
+                        confirm(itemID);
                         unitPrice(&price);
                         unitQuantity(&quan,itemID);
                         dotLine();
@@ -186,7 +187,6 @@ void View::programLoop(){
                 }
             }
             
-           
         }
         // Close the program
         else if(state==3){break;}
@@ -271,18 +271,65 @@ void View::Premium(){
     bottomInvoicePart();
 }
 
-void View::unitPrice(int *price){
+void View::confirm(int itemID){
+    int aux;
     topInvoicePart();
-    cout << "What is the unit price?" << endl << endl;
-    cin >> *price;
+    cout << "The item selected is: " << pres->returnNames(itemID) << "\nEnter Anything to Continue" << endl;
+    cin >> aux;
+}
+
+void View::unitPrice(int *price){
+    int aux=0;
+    topInvoicePart();
+        // This while checks if the input is an integer
+    do
+    {
+            // Clear the fail check
+        cin.clear();
+        cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+            // If you enter a negative number, it will be converted to positive, and if you enter 0, it will transform to a 1 by defect.
+        cout << "What is the unit price?\n(Input an integer)" << endl << endl;
+        cin >> aux;
+        if (aux < 0)
+        {
+            aux *= -1;
+        }
+        else if (aux == 0)
+        {
+            aux = 1;
+        }
+        
+    } while (cin.fail());
+
+    *price = aux;
 }
 
 void View::unitQuantity(int *quantity, int itemID){
+    int aux=0;
     topInvoicePart();
     cout << "There are " << pres->returnUnits(itemID) << " units available." << endl;
     dotLine();
-    cout << "How many units do you want to add?" << endl << endl;
-    cin >> *quantity;
+        // This while checks if the input is an integer
+    do
+    {
+            // Clear the fail check
+        cin.clear();
+        cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+            // If you enter a negative number, it will be converted to positive, and if you enter 0, it will transform to a 1 by defect.
+        cout << "How many units do you want to add?\n(Input an integer)" << endl << endl;
+        cin >> aux;
+        if (aux < 0)
+        {
+            aux *= -1;
+        }
+        else if (aux == 0)
+        {
+            aux = 1;
+        }
+        
+    } while (cin.fail());
+    
+    *quantity = aux;
 }
 
 void View::creating(){
@@ -292,8 +339,6 @@ void View::creating(){
 void View::topInvoicePart(){
     topPart();
     cout << "INVOICE CREATOR" << endl;
-    dotLine();
-    cout << "Press spacebar to cancel" << endl;
     dotLine();
     cout << endl;
 }

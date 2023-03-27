@@ -7,9 +7,10 @@ class Clothing
 {
 protected:
     float quality;
-    int stockAmount; // Un objeto son todo es stock
+    int stockAmount;
 public:
     int stockReturn(){return stockAmount;}
+    virtual float priceCalculator(int unit, int quan, int substract) = 0;
 };
 
 class Shirts : public Clothing
@@ -20,7 +21,7 @@ private:
 public:
     Shirts(float sleeve, float quality, float collar, int stockAmount);
     // The substract is there if you want to call the function without subtracting the quantity to the total amount
-    int priceCalculator(int unit, int quan, int substract);
+    float priceCalculator(int unit, int quan, int substract);
 };
 
 class Pants : public Clothing
@@ -30,7 +31,7 @@ private:
 public:
     Pants(float type, float quality, int stockAmount);
     // The substract is there if you want to call the function without subtracting the quantity to the total amount
-    int priceCalculator(int unit, int quan, int substract);
+    float priceCalculator(int unit, int quan, int substract);
 };
 
 // Invoice class
@@ -43,9 +44,9 @@ protected:
     int quantity;
     string invArticle;
     int unitPrice;
-    int totalPrice;
+    float totalPrice;
 public:
-    void setAttributes(int quantity, string artName, int unitPrice, int totalPrice, int vendorCode);
+    void setAttributes(int quantity, string artName, int unitPrice, float totalPrice, int vendorCode);
     void printSelf();
     string getCurrentDateTime();
 };
@@ -61,7 +62,7 @@ private:
     Invoice invList[20];
 public:
     Vendor(string name, string lastName);
-    void createInvoice(int quan, string artName, int unitPrice, int totalPrice);
+    void createInvoice(int quan, string artName, int unitPrice, float totalPrice);
     void printInvoices();
     void printInfo();
 };
@@ -103,6 +104,7 @@ public:
     Shop(string name, string direction);
     void selectItem(int itemID, int unit, int quan);
     int returnStock(int itemID);
+    string returnName(int itemID);
     void printInfo();
     void printVendInfo();
     void printVendInvoices();
